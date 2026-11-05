@@ -1,66 +1,42 @@
 #pragma once
 
-#include "hero_chassis_controller/Algorithm.hpp"
-
 // ROS
 #include <ros/ros.h>
-#include <sensor_msgs/Temperature.h>
-#include <std_srvs/Trigger.h>
+#include <geometry_msgs/Twist.h>
+
+// ros_control
+#include <controller_interface/controller.h>
+#include <hardware_interface/joint_command_interface.h>
+#include <pluginlib/class_list_macros.hpp>
 
 namespace hero_chassis_controller {
 
-/*!
- * Main class for the node to handle the ROS interfacing.
- */
-class HeroChassisController {
- public:
-  /*!
-   * Constructor.
-   * @param nodeHandle the ROS node handle.
-   */
-  HeroChassisController(ros::NodeHandle& nodeHandle);
+class HeroChassisController : public controller_interface::Controller<hardware_interface::EffortJointInterface> {
+public:
+  HeroChassisController() = default;
+  ~HeroChassisController() override = default;
 
-  /*!
-   * Destructor.
-   */
-  virtual ~HeroChassisController();
+  // 控制器初始化函数
+  bool init(hardware_interface::EffortJointInterface* effort_joint_interface,
+            ros::NodeHandle& root_nh, ros::NodeHandle& controller_nh) override;
 
- private:
-  /*!
-   * Reads and verifies the ROS parameters.
-   * @return true if successful.
-   */
-  bool readParameters();
+  // 控制器核心循环函数
+  void update(const ros::Time& time, const ros::Duration& period) override;
 
-  /*!
-   * ROS topic callback method.
-   * @param message the received message.
-   */
-  void topicCallback(const sensor_msgs::Temperature& message);
+private:
+  // 接收速度指令的回调函数
+  void cmdVelCallback(const geometry_msgs::Twist& msg);
 
-  /*!
-   * ROS service server callback.
-   * @param request the request of the service.
-   * @param response the provided response.
-   * @return true if successful, false otherwise.
-   */
-  bool serviceCallback(std_srvs::Trigger::Request& request,
-                       std_srvs::Trigger::Response& response);
+  // 四个轮子的句柄
+  hardware_interface::JointHandle front_left_joint_, front_right_joint_, back_left_joint_, back_right_joint_;
 
-  //! ROS node handle.
-  ros::NodeHandle& nodeHandle_;
+  // 订阅者
+  ros::Subscriber cmd_vel_sub_;
 
-  //! ROS topic subscriber.
-  ros::Subscriber subscriber_;
-
-  //! ROS topic name to subscribe to.
-  std::string subscriberTopic_;
-
-  //! ROS service server.
-  ros::ServiceServer serviceServer_;
-
-  //! Algorithm computation object.
-  Algorithm algorithm_;
+  // 存储当前接收到的速度指令
+  double target_vx_ = 0.0;
+  double target_vy_ = 0.0;
+  double target_wz_ = 0.0;
 };
 
 }  // namespace hero_chassis_controller

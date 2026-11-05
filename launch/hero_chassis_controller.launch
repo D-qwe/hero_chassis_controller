@@ -1,8 +1,14 @@
 <launch>
+  <include file="$(find rm_description_for_task)/launch/hero.launch">
+    <arg name="paused" value="true"/>
+  </include>
 
-  <!-- Launch ROS Package Template Node -->
-  <node pkg="hero_chassis_controller" type="hero_chassis_controller" name="hero_chassis_controller" output="screen">
-    <rosparam command="load" file="$(dirname)/../config/default.yaml"/>
-  </node>
+  <!-- 关键：把刚才写的配置文件加载到参数服务器 -->
+  <rosparam file="$(find hero_chassis_controller)/config/controllers.yaml" command="load"/>
 
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="
+          hero_chassis_controller
+          joint_state_controller
+        "/>
 </launch>
