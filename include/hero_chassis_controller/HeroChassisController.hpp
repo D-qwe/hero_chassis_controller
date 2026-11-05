@@ -18,7 +18,7 @@ class HeroChassisController {
    * Constructor.
    * @param nodeHandle the ROS node handle.
    */
-  HeroChassisController(ros::NodeHandle &nodeHandle);
+  HeroChassisController(ros::NodeHandle& nodeHandle);
 
   /*!
    * Destructor.
@@ -36,7 +36,7 @@ class HeroChassisController {
    * ROS topic callback method.
    * @param message the received message.
    */
-  void topicCallback(const sensor_msgs::Temperature &message);
+  void topicCallback(const sensor_msgs::Temperature& message);
 
   /*!
    * ROS service server callback.
@@ -44,11 +44,11 @@ class HeroChassisController {
    * @param response the provided response.
    * @return true if successful, false otherwise.
    */
-  bool serviceCallback(std_srvs::Trigger::Request &request,
-                       std_srvs::Trigger::Response &response);
+  bool serviceCallback(std_srvs::Trigger::Request& request,
+                       std_srvs::Trigger::Response& response);
 
   //! ROS node handle.
-  ros::NodeHandle &nodeHandle_;
+  ros::NodeHandle& nodeHandle_;
 
   //! ROS topic subscriber.
   ros::Subscriber subscriber_;
@@ -63,4 +63,4 @@ class HeroChassisController {
   Algorithm algorithm_;
 };
 
-} /* namespace */
+}  // namespace hero_chassis_controller
