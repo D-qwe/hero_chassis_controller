@@ -3,6 +3,9 @@
 // ROS
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <nav_msgs/Odometry.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <tf2/LinearMath/Quaternion.h>
 
 // ros_control
 #include <controller_interface/controller.h>
@@ -19,7 +22,7 @@
 namespace hero_chassis_controller {
 
 class HeroChassisController : public controller_interface::Controller<hardware_interface::EffortJointInterface> {
-public:
+ public:
   HeroChassisController() = default;
   ~HeroChassisController() override = default;
 
@@ -30,7 +33,7 @@ public:
   // 控制器核心循环函数
   void update(const ros::Time& time, const ros::Duration& period) override;
 
-private:
+ private:
   // 接收速度指令的回调函数
   void cmdVelCallback(const geometry_msgs::Twist& msg);
 
@@ -54,11 +57,23 @@ private:
   control_toolbox::Pid pid_bl_;
   control_toolbox::Pid pid_br_;
 
-  // 用于从配置文件读取的 PID 参数
   double p_, i_, d_, i_max_, i_min_;
 
-  // 动态调参服务器指针
   std::shared_ptr<dynamic_reconfigure::Server<hero_chassis_controller::PidConfig>> dyn_server_;
+
+  // ====== 选做 6：正运动学与里程计相关 ======
+  ros::Publisher odom_pub_; // 发布 /odom 话题
+  std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_; // 发布 TF 坐标变换
+
+  // 记录底盘在世界坐标系下的位姿和速度
+  double x_ = 0.0;
+  double y_ = 0.0;
+  double theta_ = 0.0;
+  double vx_ = 0.0;
+  double vy_ = 0.0;
+  double wz_ = 0.0;
+
+  ros::Time last_time_; // 用于计算时间差
 };
 
 }  // namespace hero_chassis_controller

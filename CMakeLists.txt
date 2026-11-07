@@ -15,6 +15,10 @@ find_package(catkin REQUIRED COMPONENTS
         geometry_msgs
         control_toolbox
         dynamic_reconfigure
+        nav_msgs
+        tf2
+        tf2_ros
+        tf2_geometry_msgs
 )
 
 ## Generate dynamic reconfigure options (注意：必须放在 catkin_package 前面)
@@ -33,6 +37,11 @@ catkin_package(
         geometry_msgs
         control_toolbox
         dynamic_reconfigure
+        nav_msgs
+        tf2
+        tf2_ros
+        tf2_geometry_msgs
+
 )
 
 ## Specify additional locations of header files
