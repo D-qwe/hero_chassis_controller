@@ -17,6 +17,7 @@
   <depend>pluginlib</depend>
   <depend>geometry_msgs</depend>
   <depend>control_toolbox</depend>
+  <depend>dynamic_reconfigure</depend>
   <export>
     <controller_interface plugin="${prefix}/hero_chassis_controller_plugins.xml"/>
   </export>

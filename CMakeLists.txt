@@ -14,6 +14,12 @@ find_package(catkin REQUIRED COMPONENTS
         pluginlib
         geometry_msgs
         control_toolbox
+        dynamic_reconfigure
+)
+
+## Generate dynamic reconfigure options (注意：必须放在 catkin_package 前面)
+generate_dynamic_reconfigure_options(
+        cfg/PidConfig.cfg
 )
 
 ## catkin specific configuration
@@ -26,6 +32,7 @@ catkin_package(
         pluginlib
         geometry_msgs
         control_toolbox
+        dynamic_reconfigure
 )
 
 ## Specify additional locations of header files
@@ -64,11 +71,13 @@ install(
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
         FILES_MATCHING PATTERN "*.hpp"
 )
+
 ## Install the plugin description file
 install(
         FILES hero_chassis_controller_plugins.xml
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
 #############
 ## Testing ##
 #############

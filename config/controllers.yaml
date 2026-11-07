@@ -1,5 +1,12 @@
+
 hero_chassis_controller:
   type: hero_chassis_controller/HeroChassisController
+  p: 2.0
+  i: 0.0
+  d: 0.0
+  i_max: 5.0
+  i_min: -5.0
+
 joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
