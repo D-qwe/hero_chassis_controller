@@ -1,6 +1,6 @@
 <launch>
   <include file="$(find rm_description_for_task)/launch/hero.launch">
-    <arg name="paused" value="true"/>
+    <arg name="paused" value="0"/>
   </include>
 
   <!-- 关键：把刚才写的配置文件加载到参数服务器 -->
