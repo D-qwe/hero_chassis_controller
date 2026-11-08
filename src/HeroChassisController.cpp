@@ -66,7 +66,7 @@ void HeroChassisController::update(const ros::Time& time, const ros::Duration& p
   if (use_world_frame_) {
     try {
       // 查找从 odom 到 base_link 的当前变换
-      geometry_msgs::TransformStamped trans = tf_buffer_->lookupTransform("base_link", "odom", time, ros::Duration(0.05));
+      geometry_msgs::TransformStamped trans = tf_buffer_->lookupTransform("base_link", "odom", ros::Time(0), ros::Duration(0.0));
 
       // 提取旋转矩阵（四元数转旋转矩阵）
       tf2::Quaternion q(trans.transform.rotation.x, trans.transform.rotation.y, trans.transform.rotation.z, trans.transform.rotation.w);
