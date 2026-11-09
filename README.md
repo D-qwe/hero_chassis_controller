@@ -1,4 +1,4 @@
-# conflict test 1
+# Conflict from master branch
 # Hero Chassis Controller
 # conflict test 2
 This package is a ROS controller for a Mecanum wheel chassis, designed for the RoboMaster hero robot.
