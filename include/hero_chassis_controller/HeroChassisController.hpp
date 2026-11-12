@@ -1,6 +1,5 @@
 #pragma once
 
-// ROS
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <nav_msgs/Odometry.h>
@@ -10,18 +9,15 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
 
-// ros_control
 #include <controller_interface/controller.h>
 #include <hardware_interface/joint_command_interface.h>
 #include <pluginlib/class_list_macros.hpp>
 
-// control_toolbox
 #include <control_toolbox/pid.h>
 
-// dynamic_reconfigure
 #include <dynamic_reconfigure/server.h>
 #include <hero_chassis_controller/PidConfig.h>
-
+#include "hero_chassis_controller/HeroChassisController.hpp"
 namespace hero_chassis_controller {
 
 class HeroChassisController : public controller_interface::Controller<hardware_interface::EffortJointInterface> {
@@ -62,10 +58,9 @@ class HeroChassisController : public controller_interface::Controller<hardware_i
   double wz_ = 0.0;
   ros::Time last_time_;
 
-  // ====== 选做 7：世界坐标系控制 ======
   std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
-  bool use_world_frame_ = false; // 模式开关：默认关闭（底盘模式），开启后为世界模式
+  bool use_world_frame_ = false;
 };
 
-}  // namespace hero_chassis_controller
+}

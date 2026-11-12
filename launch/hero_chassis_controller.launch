@@ -3,7 +3,6 @@
     <arg name="paused" value="0"/>
   </include>
 
-  <!-- 关键：把刚才写的配置文件加载到参数服务器 -->
   <rosparam file="$(find hero_chassis_controller)/config/controllers.yaml" command="load"/>
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"

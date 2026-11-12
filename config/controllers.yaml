@@ -5,7 +5,7 @@ hero_chassis_controller:
   d: 0.0
   i_max: 5.0
   i_min: -5.0
-  use_world_frame: flase
+  use_world_frame: false
 
 joint_state_controller:
   type: joint_state_controller/JointStateController
